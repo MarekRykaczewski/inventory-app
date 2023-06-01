@@ -7,6 +7,7 @@ block content
     each val in category_list
       li
         a(href='#') #{val.name}
+        p #{val.description}
 
     else
       li There are no items.
