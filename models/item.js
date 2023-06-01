@@ -10,5 +10,11 @@ const ItemSchema = new Schema({
     price: { type: Number }
   });
 
+// Virtual for item's URL
+ItemSchema.virtual("url").get(function () {
+// We don't use an arrow function as we'll need the this object
+  return `/catalog/item/${this._id}`;
+});
+
 // Export model
 module.exports = mongoose.model("Item", ItemSchema);

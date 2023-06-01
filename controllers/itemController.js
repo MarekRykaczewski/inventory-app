@@ -10,3 +10,21 @@ exports.item_list = asyncHandler(async (req, res, next) => {
       item_list: allItems,
     });
   });
+
+// Display detail page for a specific Item
+exports.item_detail = asyncHandler(async (req, res, next) => {
+    const item = await Item.findById(req.params.id)
+      .exec();
+  
+    if (Item === null) {
+      // No results.
+      const err = new Error("Item not found");
+      err.status = 404;
+      return next(err);
+    }
+  
+    res.render("item_detail", {
+      title: "Item:",
+      item: item,
+    });
+  });  

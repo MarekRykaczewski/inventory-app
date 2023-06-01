@@ -11,6 +11,9 @@ const category_controller = require('../controllers/categoryController')
 // GET catalog item_list
 router.get("/", item_controller.item_list);
 
+// GET request for one Item.
+router.get("/item/:id", item_controller.item_detail);
+
 // CATEGORY ROUTES
 router.get("/categories", category_controller.category_list);
 
