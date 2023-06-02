@@ -10,3 +10,8 @@ exports.category_list = asyncHandler(async (req, res, next) => {
       category_list: allCategories,
     });
   });
+
+// Display Category create form on GET.
+exports.category_create_get = (req, res, next) => {
+  res.render("category_form", { title: "Create Category" });
+};

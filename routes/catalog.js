@@ -18,6 +18,11 @@ router.get("/items", item_controller.item_list);
 router.get("/item/:id", item_controller.item_detail);
 
 // CATEGORY ROUTES
+
+// GET request for creating a Category
+router.get("/category/create", category_controller.category_create_get);
+
+// Get category list
 router.get("/categories", category_controller.category_list);
 
 // Export
