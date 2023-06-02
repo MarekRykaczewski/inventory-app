@@ -25,6 +25,9 @@ router.get("/item/:id", item_controller.item_detail);
 // GET request for creating a Category
 router.get("/category/create", category_controller.category_create_get);
 
+// POST request for creating Author.
+router.post("/category/create", category_controller.category_create_post);
+
 // GET request for one Author.
 router.get("/category/:id", category_controller.category_detail);
 
