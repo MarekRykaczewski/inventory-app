@@ -6,7 +6,7 @@ block content
   ul
     each val in category_list
       li
-        a(href='#') #{val.name}
+        a(href=val.url) #{val.name}
         p #{val.description}
 
     else
