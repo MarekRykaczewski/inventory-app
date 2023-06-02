@@ -47,3 +47,14 @@ exports.item_detail = asyncHandler(async (req, res, next) => {
       item: item,
     });
   });  
+
+// Display Item create form on GET.
+exports.item_create_get = asyncHandler(async (req, res, next) => {
+
+  const allCategories = await Category.find().sort({ name: 1 }).exec();
+
+  res.render("item_form", {
+    title: "Create Item",
+    categories: allCategories,
+  });
+});

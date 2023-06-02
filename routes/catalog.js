@@ -11,6 +11,9 @@ const category_controller = require('../controllers/categoryController')
 // GET index
 router.get("/", item_controller.index);
 
+// GET request for creating an Item
+router.get("/item/create", item_controller.item_create_get);
+
 // GET item list
 router.get("/items", item_controller.item_list);
 

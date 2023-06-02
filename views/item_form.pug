@@ -1,0 +1,20 @@
+extends layout
+
+block content
+  h1= title
+
+  form(method='POST' action='')
+    div.form-group
+      label(for='name') Name:
+      input#name.form-control(type='text', placeholder='Name of item' name='name' required='true' value=(undefined===category ? '' : category.name) )
+    div.form-group
+      label(for='category') Category:
+      select#category.form-control(type='select' placeholder='Select category' name='category' required='true')
+        - categories.sort(function(a, b) {let textA = a.name.toUpperCase(); let textB = b.name.toUpperCase(); return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
+        for category in categories
+          option(value=category._id, selected=(selected_category==category._id.toString() ? 'selected' : false) ) #{category.name}
+
+  if errors
+    ul
+      for error in errors
+        li!= error.msg
