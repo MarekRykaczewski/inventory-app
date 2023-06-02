@@ -32,7 +32,7 @@ exports.item_list = asyncHandler(async (req, res, next) => {
 
 // Display detail page for a specific Item
 exports.item_detail = asyncHandler(async (req, res, next) => {
-    const item = await Item.findById(req.params.id)
+    const item = await Item.findById(req.params.id).populate("category")
       .exec();
   
     if (Item === null) {
