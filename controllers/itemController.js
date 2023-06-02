@@ -20,7 +20,7 @@ exports.index = asyncHandler(async (req, res, next) => {
   });
 });
 
-// Display list of all BookInstances.
+// Display list of all Items
 exports.item_list = asyncHandler(async (req, res, next) => {
     const allItems = await Item.find().sort({ name: 1 }).exec();
   
