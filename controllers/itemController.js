@@ -1,5 +1,24 @@
 const Item = require('../models/item')
+const Category = require('../models/category')
+
 const asyncHandler = require('express-async-handler')
+
+exports.index = asyncHandler(async (req, res, next) => {
+  // Get details of items and categories (in parallel)
+  const [
+    numItems,
+    numCategories,
+  ] = await Promise.all([
+    Item.countDocuments({}).exec(),
+    Category.countDocuments({}).exec(),
+  ]);
+
+  res.render("index", {
+    title: "Inventory Home",
+    item_count: numItems,
+    category_count: numCategories,
+  });
+});
 
 // Display list of all BookInstances.
 exports.item_list = asyncHandler(async (req, res, next) => {
