@@ -1,5 +1,6 @@
 const Item = require('../models/item')
 const Category = require('../models/category')
+const { body, validationResult } = require("express-validator");
 
 const asyncHandler = require('express-async-handler')
 
@@ -58,3 +59,54 @@ exports.item_create_get = asyncHandler(async (req, res, next) => {
     categories: allCategories,
   });
 });
+
+// Handle Item create on POST.
+exports.item_create_post = [
+  // Validate and sanitize the name field.
+  body("name", "Item name must contain at least 3 characters")
+    .trim()
+    .isLength({ min: 3 })
+    .escape(),
+  // Validate and sanitize the description field.
+  body("description", "Category description accepts up to 100 characters")
+    .trim()
+    .isLength({ max: 100 })
+    .escape(),
+
+  // Process request after validation and sanitization.
+  asyncHandler(async (req, res, next) => {
+    // Extract the validation errors from a request.
+    const errors = validationResult(req);
+
+    // Create a genre object with escaped and trimmed data.
+    const item = new Item({ 
+      name: req.body.name,
+      category: req.body.category,
+      description: req.body.description,
+      price: req.body.price,
+      number_in_stock: req.body.number_in_stock
+    });
+
+    if (!errors.isEmpty()) {
+      // There are errors. Render the form again with sanitized values/error messages.
+      res.render("item_form", {
+        title: "Create Item",
+        item: item,
+        errors: errors.array(),
+      });
+      return;
+    } else {
+      // Data from form is valid.
+      // Check if Item with same name already exists.
+      const itemExists = await Item.findOne({ name: req.body.name }).exec();
+      if (itemExists) {
+        // Item exists, redirect to its detail page.
+        res.redirect(itemExists.url);
+      } else {
+        await item.save();
+        // New item saved. Redirect to item detail page.
+        res.redirect(item.url);
+      }
+    }
+  }),
+];
